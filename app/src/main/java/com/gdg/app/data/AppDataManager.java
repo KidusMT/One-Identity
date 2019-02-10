@@ -2,6 +2,7 @@ package com.gdg.app.data;
 
 import com.gdg.app.data.db.DbHelper;
 import com.gdg.app.data.db.model.person.Person;
+import com.gdg.app.data.db.model.person.PersonResponse;
 import com.gdg.app.data.network.ApiHeader;
 import com.gdg.app.data.network.ApiHelper;
 import com.gdg.app.data.network.model.LoginRequest;
@@ -46,7 +47,13 @@ public class AppDataManager implements DataManager {
 
     @Override
     public void setApiHeader(ApiHeader apiHeader) {
+        // todo get back here later, find out if its correct
+        mApiHelper.setApiHeader(apiHeader);
+    }
 
+    @Override
+    public Observable<PersonResponse> getPersons() {
+        return mApiHelper.getPersons();
     }
 
     @Override
@@ -64,18 +71,6 @@ public class AppDataManager implements DataManager {
     public Observable<List<Person>> getAllUsers() {
         return mDbHelper.getAllUsers();
     }
-
-//    @Override
-//    public Observable<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
-//                                                                  request) {
-//        return mApiHelper.doGoogleLoginApiCall(request);
-//    }
-//
-//    @Override
-//    public Observable<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
-//                                                                    request) {
-//        return mApiHelper.doFacebookLoginApiCall(request);
-//    }
 
     @Override
     public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest

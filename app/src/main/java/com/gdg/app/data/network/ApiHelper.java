@@ -1,5 +1,6 @@
 package com.gdg.app.data.network;
 
+import com.gdg.app.data.db.model.person.PersonResponse;
 import com.gdg.app.data.network.model.LoginRequest;
 import com.gdg.app.data.network.model.LoginResponse;
 import com.gdg.app.data.network.model.LogoutResponse;
@@ -12,9 +13,7 @@ public interface ApiHelper {
 
     void setApiHeader(ApiHeader apiHeader);
 
-//    Observable<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest request);
-//
-//    Observable<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest request);
+    Observable<PersonResponse> getPersons();
 
     Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
 

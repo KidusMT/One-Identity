@@ -1,10 +1,16 @@
 package com.gdg.app.di.component;
 
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import com.gdg.app.data.DataManager;
 import com.gdg.app.di.module.ActivityModule;
+import com.gdg.app.di.module.ActivityModule_ProvideActivityFactory;
 import com.gdg.app.di.module.ActivityModule_ProvideCompositeDisposableFactory;
+import com.gdg.app.di.module.ActivityModule_ProvideLinearLayoutManagerFactory;
 import com.gdg.app.di.module.ActivityModule_ProvideLoginPresenterFactory;
 import com.gdg.app.di.module.ActivityModule_ProvideMainPresenterFactory;
+import com.gdg.app.di.module.ActivityModule_ProvidePostAdapterFactory;
+import com.gdg.app.di.module.ActivityModule_ProvideRegisterPresenterFactory;
 import com.gdg.app.di.module.ActivityModule_ProvideSchedulerProviderFactory;
 import com.gdg.app.ui.login.LoginActivity;
 import com.gdg.app.ui.login.LoginActivity_MembersInjector;
@@ -18,6 +24,13 @@ import com.gdg.app.ui.main.MainMvpPresenter;
 import com.gdg.app.ui.main.MainMvpView;
 import com.gdg.app.ui.main.MainPresenter;
 import com.gdg.app.ui.main.MainPresenter_Factory;
+import com.gdg.app.ui.main.PersonAdapter;
+import com.gdg.app.ui.register.RegisterActivity;
+import com.gdg.app.ui.register.RegisterActivity_MembersInjector;
+import com.gdg.app.ui.register.RegisterMvpPresenter;
+import com.gdg.app.ui.register.RegisterMvpView;
+import com.gdg.app.ui.register.RegisterPresenter;
+import com.gdg.app.ui.register.RegisterPresenter_Factory;
 import com.gdg.app.utils.rx.SchedulerProvider;
 import dagger.MembersInjector;
 import dagger.internal.DoubleCheck;
@@ -43,7 +56,19 @@ public final class DaggerActivityComponent implements ActivityComponent {
 
   private Provider<MainMvpPresenter<MainMvpView>> provideMainPresenterProvider;
 
+  private Provider<PersonAdapter> providePostAdapterProvider;
+
+  private Provider<AppCompatActivity> provideActivityProvider;
+
+  private Provider<LinearLayoutManager> provideLinearLayoutManagerProvider;
+
   private MembersInjector<MainActivity> mainActivityMembersInjector;
+
+  private Provider<RegisterPresenter<RegisterMvpView>> registerPresenterProvider;
+
+  private Provider<RegisterMvpPresenter<RegisterMvpView>> provideRegisterPresenterProvider;
+
+  private MembersInjector<RegisterActivity> registerActivityMembersInjector;
 
   private Provider<LoginPresenter<LoginMvpView>> loginPresenterProvider;
 
@@ -93,8 +118,37 @@ public final class DaggerActivityComponent implements ActivityComponent {
             ActivityModule_ProvideMainPresenterFactory.create(
                 builder.activityModule, mainPresenterProvider));
 
+    this.providePostAdapterProvider =
+        ActivityModule_ProvidePostAdapterFactory.create(builder.activityModule);
+
+    this.provideActivityProvider =
+        ActivityModule_ProvideActivityFactory.create(builder.activityModule);
+
+    this.provideLinearLayoutManagerProvider =
+        ActivityModule_ProvideLinearLayoutManagerFactory.create(
+            builder.activityModule, provideActivityProvider);
+
     this.mainActivityMembersInjector =
-        MainActivity_MembersInjector.create(provideMainPresenterProvider);
+        MainActivity_MembersInjector.create(
+            provideMainPresenterProvider,
+            providePostAdapterProvider,
+            provideLinearLayoutManagerProvider);
+
+    this.registerPresenterProvider =
+        RegisterPresenter_Factory.create(
+            MembersInjectors.<RegisterPresenter<RegisterMvpView>>noOp(),
+            getDataManagerProvider,
+            provideSchedulerProvider,
+            provideCompositeDisposableProvider);
+
+    this.provideRegisterPresenterProvider =
+        DoubleCheck.provider(
+            ActivityModule_ProvideRegisterPresenterFactory.create(
+                builder.activityModule, registerPresenterProvider));
+
+    this.registerActivityMembersInjector =
+        RegisterActivity_MembersInjector.create(
+            provideRegisterPresenterProvider, provideLinearLayoutManagerProvider);
 
     this.loginPresenterProvider =
         LoginPresenter_Factory.create(
@@ -115,6 +169,16 @@ public final class DaggerActivityComponent implements ActivityComponent {
   @Override
   public void inject(MainActivity activity) {
     mainActivityMembersInjector.injectMembers(activity);
+  }
+
+  @Override
+  public void inject(PersonAdapter adapter) {
+    MembersInjectors.<PersonAdapter>noOp().injectMembers(adapter);
+  }
+
+  @Override
+  public void inject(RegisterActivity activity) {
+    registerActivityMembersInjector.injectMembers(activity);
   }
 
   @Override

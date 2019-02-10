@@ -1,5 +1,6 @@
 package com.gdg.app.data.network;
 
+import com.gdg.app.data.db.model.person.PersonResponse;
 import com.gdg.app.data.network.model.LoginRequest;
 import com.gdg.app.data.network.model.LoginResponse;
 import com.gdg.app.data.network.model.LogoutResponse;
@@ -35,16 +36,11 @@ public class AppApiHelper implements ApiHelper {
         }
     }
 
-//    @Override
-//    public Observable<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest request) {
-//        return null;
-//    }
+    @Override
+    public Observable<PersonResponse> getPersons() {
+        return mApiCall.getPersons();
+    }
 
-//    @Override
-//    public Observable<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest request) {
-//        return null;
-//    }
-//
     @Override
     public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request) {
         return mApiCall.login(request);

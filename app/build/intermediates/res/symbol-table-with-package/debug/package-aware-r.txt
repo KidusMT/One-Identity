@@ -778,6 +778,8 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable ic_account
+drawable ic_add
 drawable ic_add_white_24px
 drawable ic_arrow_back_white_24px
 drawable ic_copy_white_24dp
@@ -810,6 +812,10 @@ drawable notify_panel_notification_icon_bg
 drawable picture_frame_profile
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+font roboto_bold
+font roboto_italic
+font roboto_light
+font roboto_regular
 id ALT
 id CTRL
 id FUNCTION
@@ -826,9 +832,6 @@ id action_bar_subtitle
 id action_bar_title
 id action_container
 id action_context_bar
-id action_copy
-id action_cut
-id action_delete
 id action_divider
 id action_image
 id action_menu_divider
@@ -836,7 +839,6 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
-id action_share
 id action_text
 id actions
 id activity_chooser_view_content
@@ -858,6 +860,8 @@ id buttonPanel
 id calligraphy_tag_id
 id cancel_action
 id card_layout
+id card_post_title
+id card_post_user_profile
 id center
 id center_horizontal
 id center_vertical
@@ -891,6 +895,7 @@ id et_password
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fab_home
 id fill
 id fill_horizontal
 id fill_vertical
@@ -899,6 +904,8 @@ id forever
 id ghost_view
 id home
 id homeAsUp
+id home_recycler
+id home_swipe_to_refresh
 id icon
 id icon_group
 id ifRoom
@@ -914,6 +921,7 @@ id line1
 id line3
 id listMode
 id list_item
+id main_toolbar
 id masked
 id media_actions
 id message
@@ -940,6 +948,7 @@ id pin
 id progress_circular
 id progress_horizontal
 id radio
+id register_toolbar
 id right
 id right_icon
 id right_side
@@ -993,7 +1002,6 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
-id toolbar
 id top
 id topPanel
 id touch_outside
@@ -1005,10 +1013,12 @@ id transition_transform
 id tv_app_version
 id tv_email
 id tv_name
+id tv_no_home
 id tv_question_txt
 id uniform
 id up
 id useLogo
+id view_container
 id view_offset_helper
 id visible
 id withText
@@ -1051,7 +1061,9 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout activity_login
 layout activity_main
+layout activity_register
 layout card_layout
+layout card_posts
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
